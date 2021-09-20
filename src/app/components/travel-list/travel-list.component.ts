@@ -10,15 +10,12 @@ export class TravelListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("travels");
   }
 
   @Input() travels;
 
-  _travels: any;
-
   choseTrip(trip) {
-    console.log("trip :", trip);
+
   }
 
 }
