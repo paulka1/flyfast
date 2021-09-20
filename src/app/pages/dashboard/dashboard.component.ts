@@ -13,8 +13,11 @@ export class DashboardComponent implements OnInit {
   travels;
 
   ngOnInit(): void {
-    this.travels = this.travelsService.getTravel()
+    let test = (async () => await this.travelsService.getTravel());
+    this.travels = test();
+    console.log('0', this.travels);
   }
+
 
 
 

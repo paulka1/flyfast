@@ -15,7 +15,7 @@ export class TravelsService {
   getTravel(){
     axios.get(this.url+"Travels")
       .then(response => {
-      console.log(response.data);
+        return response.data;
     })
       .catch(function (error) {
         // handle error
