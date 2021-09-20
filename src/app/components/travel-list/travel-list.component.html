@@ -1,8 +1,18 @@
 <ng-container *ngFor="let idTravel of travels">
-  <div class="travelBox" (click)="choseTrip(idTravel)">
-    <p>{{idTravel.departure}}</p>
-    <p>{{idTravel.arrived}}</p>
-    <p>{{idTravel.date}}</p>
-    <p>******************</p>
-  </div>
+  <mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> {{ idTravel.departure }} - {{ idTravel.arrived }} {{ idTravel.date }} </mat-panel-title>
+        <mat-panel-description>
+          Travel to your favorite destination
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-template matExpansionPanelContent>
+
+      <div class="travelBox" (click)="choseTrip(idTravel)">
+        <app-reservation-form></app-reservation-form>
+      </div>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
 </ng-container>
