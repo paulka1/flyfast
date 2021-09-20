@@ -1,7 +1,5 @@
 <ng-container *ngFor="let idTravel of _travels">
   <div class="travelBox" (click)="choseTrip(idTravel)">
-    <p>depart : {{idTravel.departure}}</p>
-    <p>arrivé : {{idTravel.arrived}}</p>
-    <p>date : {{idTravel.date}}</p>
+    <p>date : {{idTravel.Date | date}}</p>
   </div>
 </ng-container>

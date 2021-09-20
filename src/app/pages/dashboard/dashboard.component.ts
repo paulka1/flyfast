@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {TravelsService} from '../../services/travels.service';
 
 @Component({
@@ -13,14 +13,11 @@ export class DashboardComponent implements OnInit {
   travels;
 
   ngOnInit(): void {
-    let test = (async () => await this.travelsService.getTravel());
-    this.travels = test();
-    console.log('0', this.travels);
+
+    this.travelsService.getTravels().subscribe(item => {
+      this.travels = item;
+    });
   }
-
-
-
-
   // travels = [
   //   {
   //     departure: 'JFK',

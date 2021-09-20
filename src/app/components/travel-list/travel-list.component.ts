@@ -14,16 +14,9 @@ export class TravelListComponent implements OnInit, OnChanges {
 
   @Input() _travels;
 
-
-  @Input() set(travels: any){
-    this._travels = travels;
-    console.log("TRAVELS", this._travels);
-  }
   choseTrip(trip) {
   }
 
   ngOnChanges(){
-    console.log('_travels', this._travels);
   }
-
 }
