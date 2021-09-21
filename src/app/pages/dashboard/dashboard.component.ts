@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.travelsService.getTravels().subscribe(item => {
-      console.log(item);
+      console.log("item", item);
       this.travels = item;
     });
   }

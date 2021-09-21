@@ -2,7 +2,7 @@
   <mat-accordion>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title> {{ idTravel.departure }} - {{ idTravel.arrived }} {{ idTravel.date }} </mat-panel-title>
+        <mat-panel-title>{{ getLine(idTravel,1) }} {{ getLine(idTravel,2) }} {{ idTravel.Date | date }} </mat-panel-title>
         <mat-panel-description>
           Travel to your favorite destination
         </mat-panel-description>

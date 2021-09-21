@@ -3,6 +3,15 @@
     <mat-label>Name</mat-label>
     <input type="text" formControlName="name" matInput placeholder="Ex. Dupont" >
   </mat-form-field>
-  <mat-checkbox class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+  <div *ngIf="!isEscale">
+    <mat-checkbox class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+  </div>
+  <div *ngIf="isEscale">
+    <p>Escale</p>
+    <div *ngFor="let line of idTravel.Line; let i = index">
+      {{line.Departure}} - {{line.Arrived}}
+      <mat-checkbox (change)="eventCheck($event, i)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+    </div>
+  </div>
   <button type="submit" [disabled]="!travelForm.valid" class="button">Réserver</button>
 </form>

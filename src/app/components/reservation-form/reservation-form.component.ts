@@ -12,27 +12,42 @@ export class ReservationFormComponent implements OnInit {
 
   travelForm:FormGroup;
 
+  isEscale: boolean;
+
+  @Input() idTravel;
+
   ngOnInit(): void {
     this.formInit()
+    if(this.idTravel){
+      console.log("idTravel",this.idTravel);
+
+      // Avec Escale
+      this.idTravel.Line.length > 1 ? this.isEscale = true : this.isEscale = false;
+    }
   }
 
   formInit(){
     this.travelForm = this.fb.group({
       name: ['',Validators.required],
-      date: [''],
-      departure: [''],
-      arrived: [''],
-      first_class: ['']
+      id: [''],
+      first_class: [''],
+      currency: [''],
+      first_class_0: [''],
+      first_class_1: [''],
     })
   }
 
   onSubmit(){
-    this.travelForm.get("date").setValue(this.idTravel.date);
-    this.travelForm.get("departure").setValue(this.idTravel.departure);
-    this.travelForm.get("arrived").setValue(this.idTravel.arrived);
+    this.travelForm.get("id").setValue(this.idTravel.Id);
     console.log("Reservation :s", this.travelForm.value);
   }
 
-  @Input() idTravel;
-
+  eventCheck(event, index){
+    console.log("eee", event.checked, index);
+    if(index === 0){
+      this.travelForm.get("first_class_0").setValue(event.checked);
+    } else {
+      this.travelForm.get("first_class_1").setValue(event.checked);
+    }
+  }
 }
