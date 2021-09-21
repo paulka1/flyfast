@@ -13,13 +13,17 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from '@angular/forms';
+import { CardComponent } from './UI/card.component';
+import { HeaderComponent } from './components/header/header-component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     TravelListComponent,
-    ReservationFormComponent
+    ReservationFormComponent,
+    CardComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
