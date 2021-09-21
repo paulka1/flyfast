@@ -46,7 +46,7 @@ export class ReservationFormComponent implements OnInit {
     this.travelService.bookTravel(this.travelForm.value).subscribe((d)=> console.log(d));
   }
 
-  eventCheck(event, index: number, lineId: number){
+  eventCheck(event, index: number, lineId?: number){
     if(index === 0){
       this.travelForm.get("first_class_0").setValue(event.checked);
       this.fristClassEvent.emit({event, index});

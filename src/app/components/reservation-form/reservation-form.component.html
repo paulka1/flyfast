@@ -10,8 +10,8 @@
     <p>Escale</p>
     <div *ngFor="let line of idTravel.Line; let i = index">
       {{line.Departure}} - {{line.Arrived}}
-      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
-      <mat-checkbox id="Line{{line.Id}}" (change)="eventCheck($event, i)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+<!--      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>-->
+      <mat-checkbox id="Line{{line.Id}}" (change)="eventCheck($event, i, line.id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
     </div>
   </div>
   <button type="submit" [disabled]="!travelForm.valid" class="button">Réserver</button>
