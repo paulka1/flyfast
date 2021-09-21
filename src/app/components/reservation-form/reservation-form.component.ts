@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { TravelsService } from 'src/app/services/travels.service';
 
@@ -17,12 +17,12 @@ export class ReservationFormComponent implements OnInit {
 
   @Input() idTravel;
 
+  @Output() fristClassEvent = new EventEmitter<any>();
+
   ngOnInit(): void {
     this.formInit()
     if(this.idTravel){
-      console.log("idTravel",this.idTravel);
-
-      // Avec Escale
+      // Calcul de voyage avec escale
       this.idTravel.Line.length > 1 ? this.isEscale = true : this.isEscale = false;
     }
   }
@@ -49,9 +49,11 @@ export class ReservationFormComponent implements OnInit {
   eventCheck(event, index: number, lineId: number){
     if(index === 0){
       this.travelForm.get("first_class_0").setValue(event.checked);
+      this.fristClassEvent.emit({event, index});
       this.travelForm.get("first_class_line_0").setValue(lineId);
     } else {
       this.travelForm.get("first_class_1").setValue(event.checked);
+      this.fristClassEvent.emit({event, index});
       this.travelForm.get("first_class_line_1").setValue(lineId);
     }
   }

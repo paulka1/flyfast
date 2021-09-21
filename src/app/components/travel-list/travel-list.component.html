@@ -2,7 +2,7 @@
   <mat-accordion>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>{{ getLine(idTravel,1) }} {{ getLine(idTravel,2) }} {{ idTravel.Date | date }} </mat-panel-title>
+        <mat-panel-title>{{ getLine(idTravel,1) }} {{ getLine(idTravel,2) }} {{ idTravel.Date | date }} <a id="APrice{{idTravel.Id}}">{{getPrice(idTravel)}}</a> € </mat-panel-title>
         <mat-panel-description>
           Travel to your favorite destination
         </mat-panel-description>
@@ -12,6 +12,7 @@
       <div class="travelBox">
         <app-reservation-form
           [idTravel] = idTravel
+          (fristClassEvent) = firstClassEvent($event,idTravel)
         >
         </app-reservation-form>
       </div>
