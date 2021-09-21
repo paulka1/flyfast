@@ -12,9 +12,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { CardComponent } from './UI/card.component';
 import { HeaderComponent } from './components/header/header-component';
+import { CurrencyConvertorComponent } from './components/currency-convertor/currency-convertor.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { HeaderComponent } from './components/header/header-component';
     TravelListComponent,
     ReservationFormComponent,
     CardComponent,
-    HeaderComponent
+    HeaderComponent,
+    CurrencyConvertorComponent
   ],
   imports: [
     BrowserModule,
@@ -31,11 +34,13 @@ import { HeaderComponent } from './components/header/header-component';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatExpansionModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

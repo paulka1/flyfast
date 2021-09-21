@@ -11,13 +11,19 @@ export class DashboardComponent implements OnInit {
   constructor(private travelsService : TravelsService) { }
 
   travels;
+  displayTravels;
 
   ngOnInit(): void {
 
     this.travelsService.getTravels().subscribe(item => {
       console.log("item", item);
       this.travels = item;
+      this.displayTravels = item;
     });
+  }
+
+  currencyChangeEvent() {
+    return null;
   }
   // travels = [
   //   {
