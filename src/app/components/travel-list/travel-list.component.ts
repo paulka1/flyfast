@@ -21,8 +21,6 @@ export class TravelListComponent implements OnInit, OnChanges {
 
   flagFirstClass:boolean;
 
-  firstClassState = [];
-
   ngOnChanges(){
     console.log("travel", this.travels);
   }
@@ -99,7 +97,6 @@ export class TravelListComponent implements OnInit, OnChanges {
   // }
 
   firstClassEvent(event, idTravel){
-    this.firstClassState.push(event);
     this.flagFirstClass = true;
     let test = 'APrice '+idTravel.Id;
 
