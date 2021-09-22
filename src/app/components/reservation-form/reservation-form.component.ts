@@ -9,9 +9,9 @@ import { TravelsService } from 'src/app/services/travels.service';
 })
 export class ReservationFormComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private travelService: TravelsService) { }
+  constructor(private fb: FormBuilder, private travelService: TravelsService) { }
 
-  travelForm:FormGroup;
+  travelForm: FormGroup;
 
   isEscale: boolean;
 
@@ -21,15 +21,15 @@ export class ReservationFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.formInit()
-    if(this.idTravel){
+    if (this.idTravel) {
       // Calcul de voyage avec escale
       this.idTravel.Line.length > 1 ? this.isEscale = true : this.isEscale = false;
     }
   }
 
-  formInit(){
+  formInit() {
     this.travelForm = this.fb.group({
-      name: ['',Validators.required],
+      name: ['', Validators.required],
       id: [''],
       first_class: [0],
       currency: [''],
@@ -40,20 +40,20 @@ export class ReservationFormComponent implements OnInit {
     })
   }
 
-  onSubmit(){
+  onSubmit() {
     this.travelForm.get("id").setValue(this.idTravel.Id);
     this.travelForm.get("first_class_line_0").setValue(this.idTravel.Line[0]['Id']);
-    this.travelService.bookTravel(this.travelForm.value).subscribe((d)=> console.log(d));
+    this.travelService.bookTravel(this.travelForm.value).subscribe((d) => console.log(d));
   }
 
-  eventCheck(event, index: number, lineId?: number){
-    if(index === 0){
+  eventCheck(event, index: number, lineId?: number) {
+    if (index === 0) {
       this.travelForm.get("first_class_0").setValue(event.checked);
-      this.fristClassEvent.emit({event, index});
+      this.fristClassEvent.emit({ event, index, lineId });
       this.travelForm.get("first_class_line_0").setValue(lineId);
     } else {
       this.travelForm.get("first_class_1").setValue(event.checked);
-      this.fristClassEvent.emit({event, index});
+      this.fristClassEvent.emit({ event, index, lineId });
       this.travelForm.get("first_class_line_1").setValue(lineId);
     }
   }

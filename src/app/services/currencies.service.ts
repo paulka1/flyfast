@@ -1,15 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CurrenciesService {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) {
+    this.setToEuro();
+  }
 
-  url = 'http://nelsonintech-001-site1.itempurl.com/';
-  travels$;
+  url: string = 'http://nelsonintech-001-site1.itempurl.com/';
+  travels$: Array<object>;
+  private _currency = new BehaviorSubject<string>("€");
+  public currency$ = this._currency.asObservable();
+
+  setToDollar() {
+    this._currency.next("$")
+  }
+  
+  setToEuro() {
+    this._currency.next("€")
+  }
   convertCurrency(devise: string): Observable<any> {
     return this.http.get<any>(this.url + 'Rate', {
       params: {
@@ -17,15 +29,12 @@ export class CurrenciesService {
       },
     });
   }
-  currencyChangeEvent(rate: number) {
-    console.log(this.travels$)
-    
+  currencyChangeEvent(rate: number) {    
     this.travels$.forEach((travel, idx) => {
       travel['Line'].forEach((line, lineIdx) => {
         this.travels$[idx]['Line'][lineIdx]['Price'] = line['Price'] * rate;
       });
     });
-    console.log('gg')
     return this.travels$;
   }
 }

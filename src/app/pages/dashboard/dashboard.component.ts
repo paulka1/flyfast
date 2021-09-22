@@ -10,18 +10,14 @@ export class DashboardComponent implements OnInit {
 
   constructor(private travelsService : TravelsService) { }
 
-  travels;
-  displayTravels;
+  travels: Array<object>;
+  displayTravels: Array<object>;
 
   ngOnInit(): void {
-
-    this.travelsService.getTravels().subscribe(item => {
-      console.log("item", item);
-      this.travels = item;
-      console.log(this.travelsService.travels$.subscribe())
-      this.travelsService.travels$.subscribe((value) => {
-        this.displayTravels = value;
-      });
+    this.travelsService.getTravels();
+    this.travelsService.travels$.subscribe((value) => {
+      this.displayTravels = value;
     });
   }
+
 }

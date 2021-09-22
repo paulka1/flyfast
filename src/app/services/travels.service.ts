@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +10,23 @@ export class TravelsService {
   constructor(public http :  HttpClient) { }
 
    url = "http://nelsonintech-001-site1.itempurl.com/";
-   travels$: Observable<Array<object>> = of();
+   //travels$: Observable<Array<object>> = of();
+   private _travels = new BehaviorSubject<Array<object>>([]);
+   public travels$ = this._travels.asObservable();
 
-  getTravels(): Observable<any> {
-    const res = this.http.get<any>(this.url + "Travels");
-    console.log(res)
-    this.travels$ = res;
-    return res
+   
+   private _basicTravels = new BehaviorSubject<Array<object>>([]);
+   public basicTravels$ = this._basicTravels.asObservable();
+  getTravels() {
+    this.http.get<Array<object>>(this.url + "Travels").subscribe(value => {
+      this.setFlights(value)
+    });
   }
 
+  setFlights( array )
+ {
+   this._travels.next( array )
+ }
   bookTravel(reservations: object) {
     let bookData = {}
     bookData['customerName'] = reservations['name'];
