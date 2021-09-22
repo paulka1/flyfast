@@ -1,17 +1,32 @@
 <form [formGroup]="travelForm" class="reservation-form" (ngSubmit)="onSubmit()">
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Name</mat-label>
-    <input type="text" formControlName="name" matInput placeholder="Ex. Dupont" >
+    <input type="text" formControlName="name" matInput placeholder="Ex. Dupont">
   </mat-form-field>
   <div *ngIf="!isEscale">
-    <mat-checkbox (change)="eventCheck($event,null)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+    <div *ngIf="idTravel.Line[0].Plane.NbrPlaceFirstClassRemaining > 0">
+      <mat-checkbox (change)="eventCheck($event,null)" [(ngModel)]="idTravel.Line[0].IsFirstClass"
+        class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+    </div>
+
+    <div *ngIf="idTravel.Line[0].Plane.NbrPlaceFirstClassRemaining == 0">
+      <a>Pas de 1 ère Class sur ce vol</a>
+    </div>
+
   </div>
   <div *ngIf="isEscale">
     <p>Escale</p>
     <div *ngFor="let line of idTravel.Line; let i = index">
       {{line.Departure}} - {{line.Arrived}}
-<!--      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>-->
-      <mat-checkbox id="Line{{line.Id}}" (change)="eventCheck($event, i, line.id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+      <!--      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>-->
+      <div *ngIf="line.Plane.NbrPlaceFirstClassRemaining > 0">
+        <mat-checkbox id="Line{{line.Id}}" [(ngModel)]="line.IsFirstClass" (change)="eventCheck($event, i, line.Id)"
+          class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
+      </div>
+
+      <div *ngIf="line.Plane.NbrPlaceFirstClassRemaining == 0">
+        <a>Pas de 1 ère Class sur ce vol</a>
+      </div>
     </div>
   </div>
   <button type="submit" [disabled]="!travelForm.valid" class="button">Réserver</button>

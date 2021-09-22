@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { CardComponent } from './UI/card.component';
 import { HeaderComponent } from './components/header/header-component';
@@ -26,7 +26,7 @@ import {MatSelectModule} from '@angular/material/select';
     ReservationFormComponent,
     CardComponent,
     HeaderComponent,
-    CurrencyConvertorComponent
+    CurrencyConvertorComponent    
   ],
   imports: [
     BrowserModule,
