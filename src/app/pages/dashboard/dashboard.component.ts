@@ -18,28 +18,10 @@ export class DashboardComponent implements OnInit {
     this.travelsService.getTravels().subscribe(item => {
       console.log("item", item);
       this.travels = item;
-      this.displayTravels = item;
+      console.log(this.travelsService.travels$.subscribe())
+      this.travelsService.travels$.subscribe((value) => {
+        this.displayTravels = value;
+      });
     });
   }
-
-  currencyChangeEvent() {
-    return null;
-  }
-  // travels = [
-  //   {
-  //     departure: 'JFK',
-  //     arrived: 'DTW',
-  //     date: '2021-09-04T10:11:25+0200',
-  //   },
-  //   {
-  //     departure: 'JHG',
-  //     arrived: 'TRE',
-  //     date: '2021-09-04T10:11:25+0200',
-  //   },
-  //   {
-  //     departure: 'GTF',
-  //     arrived: 'GYT',
-  //     date: '2021-09-04T10:11:25+0200',
-  //   }
-  // ];
 }

@@ -101,7 +101,7 @@ export class TravelListComponent implements OnInit, OnChanges {
   firstClassEvent(event, idTravel){
     this.firstClassState.push(event);
     this.flagFirstClass = true;
-    let test = 'APrice '+idTravel.Id;
+    let test = 'APrice'+idTravel.Id;
 
     // let element = document.getElementById(test) as HTMLElement;
     // let element = document.getElementById(test);
