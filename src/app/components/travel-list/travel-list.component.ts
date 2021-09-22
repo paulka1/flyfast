@@ -8,7 +8,13 @@ import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class TravelListComponent implements OnInit, OnChanges {
 
-  @Input() travels: any;
+  constructor(private elem: ElementRef) { }
+
+  ngOnInit(): void {
+    console.log("travels", this.travels);
+  }
+
+  @Input() travels;
 
   departure: string;
   arrived: string;
@@ -18,18 +24,7 @@ export class TravelListComponent implements OnInit, OnChanges {
 
   firstClassState = [];
 
-  constructor(private elem: ElementRef) {
-
-
-  }
-
-  ngOnInit(): void {
-    console.log("travels", this.travels);
-  }
-
-
-
-  ngOnChanges() {
+  ngOnChanges(){
     console.log("travel", this.travels);
 
     //===================================================
@@ -83,36 +78,58 @@ export class TravelListComponent implements OnInit, OnChanges {
     }
   }
 
-  getPrice(idTravel) {
+  getPrice(idTravel){
     this.price = 0;
-    if (idTravel) {
+    if(idTravel) {
       // console.log("idTravel", idTravel);
-      if (idTravel.Line.length > 1) {
-        let totalPrice = 0;
-        for (let i = 0; i < idTravel.Line.length; i++) {
-          //const lineId = this.elem.nativeElement.querySelectorAll('mat-checkbox');
+      for(let i = 0; i < idTravel.Line.length; i++){
+        const lineId = this.elem.nativeElement.querySelectorAll('mat-checkbox');
           // console.log("lineId", lineId);
-          // lineId.forEach(element => {
-          //   // console.log('elmeentId', element.id);
-          //   // console.log("---->", element.querySelector('input'));
-          //   let checkbox = element.querySelector('input');
-          // });
-          totalPrice += idTravel.Line[i].Price;
+        lineId.forEach(element => {
+          // console.log('elmeentId', element.id);
+          // console.log("---->", element.querySelector('input'));
+          let checkbox = element.querySelector('input');
+        });
+        this.price += idTravel.Line[i].Price;
         }
-
-        this.price = totalPrice * 0.85;
-      } else {
-
-        this.price += idTravel.Line[0].Price;
       }
-    }
     return this.price
   }
 
+  // getPrice(idTravel){
+  //   this.price = 0;
+  //   if(idTravel) {
+  //     // console.log("idTravel", idTravel);
+  //     for(let i = 0; i < idTravel.Line.length; i++){
+  //       const lineId = this.elem.nativeElement.querySelectorAll('mat-checkbox');
+  //       if (lineId.length > 0) {
+  //         console.log("lineId", lineId);
+  //         lineId.forEach(element => {
+  //           // console.log('elmeentId', element.id);
+  //           // console.log("---->", element.querySelector('input'));
+  //           let checkbox = element.querySelector('input');
+  //           console.log("checkbox", checkbox);
+  //           if(checkbox && checkbox.checked){
+  //             this.price += idTravel.Line[i].Price * 2;
+  //           } else {
+  //             this.price += idTravel.Line[i].Price;
+  //           }
+  //           //console.log("checkbox", checkbox.checked);
+  //         });
+  //       } else {
+  //         this.price += idTravel.Line[i].Price;
+  //       }
+  //       // this.price += idTravel.Line[i].Price;
+  //
+  //     }
+  //   }
+  //   return this.price
+  // }
+
   /**
    * Methode qui permet de recalculer le total des prix.
-   * @param event 
-   * @param idTravel 
+   * @param event
+   * @param idTravel
    */
   firstClassEvent(event, idTravel) {
     this.firstClassState.push(event);
@@ -143,5 +160,4 @@ export class TravelListComponent implements OnInit, OnChanges {
       }
     });
   }
-
 }

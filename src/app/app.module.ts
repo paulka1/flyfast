@@ -16,7 +16,12 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import { CardComponent } from './UI/card.component';
 import { HeaderComponent } from './components/header/header-component';
 import { CurrencyConvertorComponent } from './components/currency-convertor/currency-convertor.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { SearchFormComponent } from './components/search-form/search-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -26,7 +31,8 @@ import {MatSelectModule} from '@angular/material/select';
     ReservationFormComponent,
     CardComponent,
     HeaderComponent,
-    CurrencyConvertorComponent    
+    CurrencyConvertorComponent,
+    SearchFormComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +46,11 @@ import {MatSelectModule} from '@angular/material/select';
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
