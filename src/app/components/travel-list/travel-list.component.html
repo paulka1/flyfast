@@ -5,6 +5,14 @@
         <mat-panel-title>{{ getLine(idTravel,1) }} {{ getLine(idTravel,2) }} {{ idTravel.Date | date }} <a class="price"
             id="APrice{{idTravel.Id}}"  >{{idTravel.TotalSum}}</a> € </mat-panel-title>
         <mat-panel-description>
+          <div *ngIf="idTravel.Line.length > 1">
+          <p style="display: flex;margin-right: 15px">
+              <span class="material-icons" style="margin-right: 5px">
+                  flight_land
+              </span>
+            Escale
+          </p>
+          </div>
           Travel to your favorite destination
         </mat-panel-description>
       </mat-expansion-panel-header>

@@ -21,6 +21,7 @@ export class TravelListComponent implements OnInit, OnChanges {
   price: number;
 
   flagFirstClass: boolean;
+  displayEscale: boolean;
 
   firstClassState = [];
 
@@ -96,35 +97,12 @@ export class TravelListComponent implements OnInit, OnChanges {
     return this.price
   }
 
-  // getPrice(idTravel){
-  //   this.price = 0;
-  //   if(idTravel) {
-  //     // console.log("idTravel", idTravel);
-  //     for(let i = 0; i < idTravel.Line.length; i++){
-  //       const lineId = this.elem.nativeElement.querySelectorAll('mat-checkbox');
-  //       if (lineId.length > 0) {
-  //         console.log("lineId", lineId);
-  //         lineId.forEach(element => {
-  //           // console.log('elmeentId', element.id);
-  //           // console.log("---->", element.querySelector('input'));
-  //           let checkbox = element.querySelector('input');
-  //           console.log("checkbox", checkbox);
-  //           if(checkbox && checkbox.checked){
-  //             this.price += idTravel.Line[i].Price * 2;
-  //           } else {
-  //             this.price += idTravel.Line[i].Price;
-  //           }
-  //           //console.log("checkbox", checkbox.checked);
-  //         });
-  //       } else {
-  //         this.price += idTravel.Line[i].Price;
-  //       }
-  //       // this.price += idTravel.Line[i].Price;
-  //
-  //     }
-  //   }
-  //   return this.price
-  // }
+  isEscale(idTravel){
+    if(idTravel) {
+      idTravel.Line.length > 1 ? this.displayEscale = true : this.displayEscale = false;
+      return this.displayEscale;
+    }
+    }
 
   /**
    * Methode qui permet de recalculer le total des prix.

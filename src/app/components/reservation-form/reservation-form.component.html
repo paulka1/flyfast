@@ -15,12 +15,6 @@
 
   </div>
   <div *ngIf="isEscale">
-    <p style="display: flex">
-      <span class="material-icons" style="margin-right: 5px">
-          flight_land
-      </span>
-      Escale
-    </p>
     <div *ngFor="let line of idTravel.Line; let i = index">
       {{line.Departure}} - {{line.Arrived}}
       <!--      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>-->
