@@ -1,49 +1,43 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TravelsService {
+  constructor(public http: HttpClient) {}
 
-  constructor(public http :  HttpClient) { }
+  url = environment.urlFlyfast;
+  private _travels = new BehaviorSubject<Array<object>>([]);
+  public travels$ = this._travels.asObservable();
 
-   url = "http://nelsonintech-001-site1.itempurl.com/";
-   //travels$: Observable<Array<object>> = of();
-   private _travels = new BehaviorSubject<Array<object>>([]);
-   public travels$ = this._travels.asObservable();
-
-   
-   private _basicTravels = new BehaviorSubject<Array<object>>([]);
-   public basicTravels$ = this._basicTravels.asObservable();
   getTravels() {
-    this.http.get<Array<object>>(this.url + "Travels").subscribe(value => {
-      this.setFlights(value)
+    this.http.get<Array<object>>(this.url + 'Travels').subscribe((value) => {
+      this.setFlights(value);
     });
   }
 
-  setFlights( array )
- {
-   this._travels.next( array )
- }
+  setFlights(array) {
+    this._travels.next(array);
+  }
   bookTravel(reservations: object) {
-    let bookData = {}
+    let bookData = {};
     bookData['customerName'] = reservations['name'];
     bookData['tripId'] = reservations['id'];
     bookData['PriceEUR'] = 12;
     bookData['PriceUSD'] = 14;
     const firstTicket = {
-      "LineId": reservations['first_class_line_0'],
-      "TicketType": reservations['first_class_0'],
+      LineId: reservations['first_class_line_0'],
+      TicketType: reservations['first_class_0'],
     };
 
-
     bookData['Lines'] = [firstTicket];
-    if(reservations['first_class_line_1'] !== "") {
+    if (reservations['first_class_line_1'] !== '') {
       const secondTicket = {
-        "LineId": reservations['first_class_line_1'],
-        "TicketType": reservations['first_class_1'],
+        LineId: reservations['first_class_line_1'],
+        TicketType: reservations['first_class_1'],
       };
       bookData['Lines'].push(secondTicket);
     }
@@ -51,4 +45,7 @@ export class TravelsService {
     return this.http.post(`${this.url}/Book`, bookData);
   }
 
+  RechercherTravel(params: any) {
+    console.log('SERACH PARMA', params);
+  }
 }

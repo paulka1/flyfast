@@ -4,42 +4,37 @@ import { CurrenciesService } from 'src/app/services/currencies.service';
 @Component({
   selector: 'app-travel-list',
   templateUrl: './travel-list.component.html',
-  styleUrls: ['./travel-list.component.scss']
+  styleUrls: ['./travel-list.component.scss'],
 })
 export class TravelListComponent implements OnInit, OnChanges {
-
-  @Input() travels: any;
+  @Input() travels;
 
   departure: string;
   arrived: string;
   price: number;
 
   flagFirstClass: boolean;
+  displayEscale: boolean;
 
   firstClassState = [];
 
-  constructor(private elem: ElementRef, private currency: CurrenciesService) {
-
-
-  }
-  moneySign: string
+  constructor(private elem: ElementRef, private currency: CurrenciesService) {}
+  moneySign: string;
   ngOnInit(): void {
-    console.log("travels", this.travels);
-    this.currency.currency$.subscribe(sign => {
+    console.log('travels', this.travels);
+    this.currency.currency$.subscribe((sign) => {
       this.moneySign = sign;
-    })
+    });
   }
-
-
 
   ngOnChanges() {
-    console.log("travel", this.travels);
+    console.log('travel', this.travels);
 
     //===================================================
     // Modification du Model.
     //====================================================
     if (this.travels != undefined) {
-      this.travels.forEach(travel => {
+      this.travels.forEach((travel) => {
         travel.TotalSum = 0;
         for (let index = 0; index < travel.Line.length; index++) {
           const line = travel.Line[index];
@@ -57,10 +52,8 @@ export class TravelListComponent implements OnInit, OnChanges {
         if (travel.Line.length > 1) {
           travel.TotalSum = travel.TotalSum * 0.85;
         }
-
       });
     }
-
   }
 
   getLine(idTravel, way) {
@@ -90,38 +83,39 @@ export class TravelListComponent implements OnInit, OnChanges {
     this.price = 0;
     if (idTravel) {
       // console.log("idTravel", idTravel);
-      if (idTravel.Line.length > 1) {
-        let totalPrice = 0;
-        for (let i = 0; i < idTravel.Line.length; i++) {
-          //const lineId = this.elem.nativeElement.querySelectorAll('mat-checkbox');
-          // console.log("lineId", lineId);
-          // lineId.forEach(element => {
-          //   // console.log('elmeentId', element.id);
-          //   // console.log("---->", element.querySelector('input'));
-          //   let checkbox = element.querySelector('input');
-          // });
-          totalPrice += idTravel.Line[i].Price;
-        }
-
-        this.price = totalPrice * 0.85;
-      } else {
-
-        this.price += idTravel.Line[0].Price;
+      for (let i = 0; i < idTravel.Line.length; i++) {
+        const lineId = this.elem.nativeElement.querySelectorAll('mat-checkbox');
+        // console.log("lineId", lineId);
+        lineId.forEach((element) => {
+          // console.log('elmeentId', element.id);
+          // console.log("---->", element.querySelector('input'));
+          let checkbox = element.querySelector('input');
+        });
+        this.price += idTravel.Line[i].Price;
       }
     }
-    return this.price
+    return this.price;
+  }
+
+  isEscale(idTravel) {
+    if (idTravel) {
+      idTravel.Line.length > 1
+        ? (this.displayEscale = true)
+        : (this.displayEscale = false);
+      return this.displayEscale;
+    }
   }
 
   /**
    * Methode qui permet de recalculer le total des prix.
-   * @param event 
-   * @param idTravel 
+   * @param event
+   * @param idTravel
    */
   firstClassEvent(event, idTravel) {
     this.firstClassState.push(event);
     this.flagFirstClass = true;
 
-    this.travels.forEach(element => {
+    this.travels.forEach((element) => {
       if (element.Id == idTravel.Id) {
         //===================================================
         // On recalcul Total Sum avec les données des Lines.
@@ -131,7 +125,7 @@ export class TravelListComponent implements OnInit, OnChanges {
           const line = element.Line[index];
 
           if (line.IsFirstClass === true) {
-            idTravel.TotalSum = idTravel.TotalSum + (line.Price * 2);
+            idTravel.TotalSum = idTravel.TotalSum + line.Price * 2;
           } else {
             idTravel.TotalSum = idTravel.TotalSum + line.Price;
           }
@@ -146,5 +140,4 @@ export class TravelListComponent implements OnInit, OnChanges {
       }
     });
   }
-
 }
