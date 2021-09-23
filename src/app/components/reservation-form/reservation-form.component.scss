@@ -4,5 +4,21 @@ button {
 }
 
 .escaleLine {
-  padding: 5px;
+  padding-bottom: 5px;
+}
+
+form {
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  #nameInput{
+    width: 35%;
+  }
+
+  #reservationButton{
+    width: 40%;
+    margin: auto;
+  }
 }

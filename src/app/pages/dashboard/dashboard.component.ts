@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.travelsService.getTravels().subscribe(item => {
-      console.log("item", item);
       this.travels = item;
       this.displayTravels = item;
     });

@@ -18,14 +18,14 @@
             <span class="material-icons">
                 verified
             </span>
-            {{idTravel.Company}}
+            {{getCompanyName(idTravel.Company)}}
           </p>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
 
         <div class="travelBox">
-          <app-reservation-form [idTravel]=idTravel (fristClassEvent)=firstClassEvent($event,idTravel)>
+          <app-reservation-form [idTravel]=idTravel (fristClassEvent)=firstClassEvent($event,idTravel) (optionsEvent)="optionsEvent($event)">
           </app-reservation-form>
         </div>
       </ng-template>
