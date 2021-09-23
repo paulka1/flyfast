@@ -41,6 +41,13 @@ export class TravelsService {
   }
 
   RechercherTravel(params:any){
-    console.log("SERACH PARMA", params);
+    console.log("SERACH PARMA", params.date);
+    if(params.date){
+      console.log("00");
+      return this.http.get<any>(this.url + "Travels?date="+params.date.format('YYYY-MM-DD'));
+    } else {
+      console.log("111");
+      return this.http.get<any>(this.url + "Travels");
+    }
   }
 }

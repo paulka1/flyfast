@@ -1,5 +1,6 @@
 import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
+import { company } from '../../enum/enum';
 
 @Component({
   selector: 'app-travel-list',
@@ -11,7 +12,6 @@ export class TravelListComponent implements OnInit, OnChanges {
   constructor(private elem: ElementRef) { }
 
   ngOnInit(): void {
-    console.log("travels", this.travels);
   }
 
   @Input() travels;
@@ -19,6 +19,8 @@ export class TravelListComponent implements OnInit, OnChanges {
   departure: string;
   arrived: string;
   price: number;
+
+  company = company;
 
   flagFirstClass: boolean;
   displayEscale: boolean;

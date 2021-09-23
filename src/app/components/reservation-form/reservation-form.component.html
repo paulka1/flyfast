@@ -15,8 +15,8 @@
 
   </div>
   <div *ngIf="isEscale">
-    <div *ngFor="let line of idTravel.Line; let i = index">
-      {{line.Departure}} - {{line.Arrived}}
+    <div class="escaleLine" *ngFor="let line of idTravel.Line; let i = index">
+      <span style="color: #3c0080; font-weight: bold; padding-right:10px">{{line.Departure}} - {{line.Arrived}}</span>
       <!--      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>-->
       <div *ngIf="line.Plane.NbrPlaceFirstClassRemaining > 0">
         <mat-checkbox id="Line{{line.Id}}" [(ngModel)]="line.IsFirstClass" (change)="eventCheck($event, i, line.Id)"

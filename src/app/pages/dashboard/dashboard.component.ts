@@ -1,4 +1,4 @@
-import {Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {TravelsService} from '../../services/travels.service';
 
 @Component({
@@ -6,12 +6,14 @@ import {TravelsService} from '../../services/travels.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnChanges {
 
   constructor(private travelsService : TravelsService) { }
 
   travels;
   displayTravels;
+
+  flightSearchResult;
 
   ngOnInit(): void {
 
@@ -25,21 +27,15 @@ export class DashboardComponent implements OnInit {
   currencyChangeEvent() {
     return null;
   }
-  // travels = [
-  //   {
-  //     departure: 'JFK',
-  //     arrived: 'DTW',
-  //     date: '2021-09-04T10:11:25+0200',
-  //   },
-  //   {
-  //     departure: 'JHG',
-  //     arrived: 'TRE',
-  //     date: '2021-09-04T10:11:25+0200',
-  //   },
-  //   {
-  //     departure: 'GTF',
-  //     arrived: 'GYT',
-  //     date: '2021-09-04T10:11:25+0200',
-  //   }
-  // ];
+
+    ngOnChanges() {
+
+    }
+
+  getTravels(event){
+    console.log("this.flightSearchResult", this.flightSearchResult);
+    this.travels = event;
+    this.displayTravels = event;
+    console.log("this.this.travels", this.travels);
+  }
 }
