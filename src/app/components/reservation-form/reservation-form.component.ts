@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { CurrenciesService } from 'src/app/services/currencies.service';
 import { TravelsService } from 'src/app/services/travels.service';
+import {Options} from '../../enum/constant';
 
 @Component({
   selector: 'app-reservation-form',
@@ -15,17 +16,20 @@ export class ReservationFormComponent implements OnInit {
   travelForm: FormGroup;
 
   isEscale: boolean;
+  optionsCount: number = 0;
 
   @Input() idTravel;
   @Input() price: number;
 
   @Output() fristClassEvent = new EventEmitter<any>();
+  @Output() optionsEvent = new EventEmitter<any>();
 
   ngOnInit(): void {
     this.formInit()
     if (this.idTravel) {
       this.idTravel.Line.length > 1 ? this.isEscale = true : this.isEscale = false;
     }
+    this.optionsCount = 0;
   }
 
   formInit() {
@@ -40,7 +44,8 @@ export class ReservationFormComponent implements OnInit {
       first_class_line_1: [''],
       date: [''],
       company: [''],
-      basePrice: ['']
+      basePrice: [''],
+      options: ['']
     })
   }
 
@@ -68,6 +73,13 @@ export class ReservationFormComponent implements OnInit {
       this.travelForm.get("first_class_1").setValue(event.checked);
       this.fristClassEvent.emit({ event, index, lineId });
       this.travelForm.get("first_class_line_1").setValue(lineId);
+    }
+  }
+
+  getOptions(option){
+    if(option) {
+       let result = Options.find((value) => value.Name === option ? value.text : '');
+      return result.text;
     }
   }
 }

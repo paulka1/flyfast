@@ -1,79 +1,38 @@
 <div class="searchFormDiv">
-  <div class="form-container">
+  <div>
     <h1>Rechercher un vol</h1>
-    <form
-      [formGroup]="searchForm"
-      class="reservation-form"
-      (ngSubmit)="onSubmit()"
-    >
-      <mat-form-field appearance="fill">
-        <mat-label>Départ</mat-label>
-        <mat-select formControlName="departure">
-          <mat-option *ngFor="let aero of airport" [value]="aero">
-            {{ aero }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Arrivé</mat-label>
-        <mat-select formControlName="arrived">
-          <mat-option *ngFor="let aero of airport" [value]="aero">
-            {{ aero }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
+    <form [formGroup]="searchForm" class="reservation-form" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill">
         <mat-label>Choisis une date</mat-label>
-        <input matInput formControlName="date" [matDatepicker]="picker" />
+        <input matInput formControlName="date" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <div style="margin-bottom: 10px; margin-top: -20px">
-        <div
-          *ngIf="
-            searchForm.get('arrived').touched &&
-            searchForm.get('departure').touched &&
-            searchForm.get('departure').value ===
-              searchForm.get('arrived').value &&
-            !!searchForm.get('departure').value &&
-              !!searchForm.get('arrived').value
-          "
-        >
-          <span class="errorMessage" style="margin-bottom: 100px; color: red"
-            >Veuillez choisir deux aéroports différents</span
-          >
+        <div *ngIf="searchForm.get('arrived').touched && searchForm.get('departure').touched
+                    && searchForm.get('departure').value === searchForm.get('arrived').value
+                    && (!!searchForm.get('departure').value && !!searchForm.get('arrived').value)">
+          <span class='errorMessage' style="margin-bottom: 100px; color:red">Veuillez choisir deux aéroports différents</span>
         </div>
-        <div
-          *ngIf="
-            (searchForm.get('arrived').touched &&
-              searchForm.get('arrived').value &&
-              !searchForm.get('departure').touched) ||
-            (searchForm.get('departure').touched &&
-              searchForm.get('departure').value &&
-              !searchForm.get('arrived').touched)
-          "
-        >
-          <span class="errorMessage" style="margin-bottom: 100px; color: red"
-            >Veuillez choisir un départ et une arrivée</span
-          >
+        <div *ngIf="((searchForm.get('arrived').touched && searchForm.get('arrived').value)
+                      && !searchForm.get('departure').touched)
+                      || ((searchForm.get('departure').touched && searchForm.get('departure').value)
+                      && !searchForm.get('arrived').touched)">
+          <span class='errorMessage' style="margin-bottom: 100px; color:red">Veuillez choisir un départ et une arrivée</span>
         </div>
         <div *ngIf="this.dateError">
-          <span class="errorMessage" style="margin-bottom: 100px; color: red"
-            >Le voyage dans le temps n'est pas autorisé</span
-          >
+          <span class='errorMessage' style="margin-bottom: 100px; color:red">Le voyage dans le passé n'est pas autorisé</span>
         </div>
+        <button
+          mat-button
+          color="primary"
+          type="submit"
+          [disabled]="!searchForm.valid"
+          class="button"
+        >
+          Rechercher
+        </button>
       </div>
-      <button
-        mat-button
-        color="primary"
-        type="submit"
-        [disabled]="!searchForm.valid"
-        class="button"
-      >
-        Rechercher
-      </button>
     </form>
   </div>
   <div class="booking-validation">

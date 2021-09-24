@@ -9,7 +9,7 @@ import { BookingPrice } from '../components/reservation-form/bookingPrice';
 import { BookingsService } from './bookings.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TravelsService {
   constructor(public http: HttpClient, private bookingService: BookingsService) {}
@@ -76,7 +76,12 @@ export class TravelsService {
   });
 }
 
-  RechercherTravel(params: any) {
-    console.log('SERACH PARMA', params);
+  RechercherTravel(params:any){
+    console.log("parma", params);
+    if(params.date){
+      return this.http.get<any>(this.url + "Travels?date="+params.date.format('YYYY-MM-DD'));
+    } else {
+      return this.http.get<any>(this.url + "Travels");
+    }
   }
 }

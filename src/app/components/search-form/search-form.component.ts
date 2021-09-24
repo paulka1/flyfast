@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {FormGroup, FormBuilder} from '@angular/forms';
 import { BookingsService } from 'src/app/services/bookings.service';
 import {TravelsService} from '../../services/travels.service';
@@ -19,6 +19,7 @@ export class SearchFormComponent implements OnInit {
   isBooking: boolean;
   isBooked: boolean;
   bookedFailed: boolean;
+  @Output() searchFlightResult = new EventEmitter<any>();
 
   constructor(private fb:FormBuilder,
               private travelsService:TravelsService, 
@@ -49,11 +50,14 @@ export class SearchFormComponent implements OnInit {
 
   onSubmit(){
     let today = new Date();
-    if(today > this.searchForm.get('date').value){
+    if((today > this.searchForm.get('date').value) && this.searchForm.get('date').value){
       this.dateError = true;
     }else {
       this.dateError = false;
-      this.travelsService.RechercherTravel(this.searchForm.value);
+      let result = this.travelsService.RechercherTravel(this.searchForm.value);
+      result.subscribe(flight => {
+        this.searchFlightResult.emit(flight);
+      })
     }
   }
 
