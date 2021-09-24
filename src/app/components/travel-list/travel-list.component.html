@@ -2,24 +2,30 @@
   <mat-accordion>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
-        <mat-panel-title>{{ getLine(idTravel,1) }} {{ getLine(idTravel,2) }} {{ idTravel.Date | date }} <a class="price"
-            id="APrice{{idTravel.Id}}"  >{{idTravel.TotalSum | number }}</a> {{moneySign}} </mat-panel-title>
+        <mat-panel-title><span style="color: #3c0080; font-weight: bold; padding-right:10px">{{ getLine(idTravel,1) }} {{ getLine(idTravel,2) }}</span> {{ idTravel.Date | date }} <a class="price"
+            id="APrice{{idTravel.Id}}"  >{{idTravel.TotalSum}}</a> € </mat-panel-title>
         <mat-panel-description>
           <div *ngIf="idTravel.Line.length > 1">
           <p style="display: flex;margin-right: 15px">
               <span class="material-icons" style="margin-right: 5px">
                   flight_land
               </span>
-            Escale
+            Escale 15% OFF
           </p>
           </div>
           Travel to your favorite destination
+          <p style="margin-left: 15px" *ngIf="idTravel.Company != company.FLY_FAST_COMPANY">
+            <span class="material-icons">
+                verified
+            </span>
+            {{getCompanyName(idTravel.Company)}}
+          </p>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <ng-template matExpansionPanelContent>
 
         <div class="travelBox">
-          <app-reservation-form [idTravel]=idTravel (fristClassEvent)=firstClassEvent($event,idTravel)>
+          <app-reservation-form [idTravel]=idTravel (fristClassEvent)=firstClassEvent($event,idTravel) (optionsEvent)="optionsEvent($event)">
           </app-reservation-form>
         </div>
       </ng-template>

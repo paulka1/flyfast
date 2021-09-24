@@ -13,6 +13,8 @@ export class DashboardComponent implements OnInit {
   travels: Array<object>;
   displayTravels: Array<object>;
 
+  flightSearchResult;
+
   ngOnInit(): void {
     this.travelsService.getTravels();
     this.travelsService.travels$.subscribe((value) => {
@@ -20,4 +22,26 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  //   ngOnInit(): void {
+  //
+  //     this.travelsService.getTravels().subscribe(item => {
+  //       this.travels = item;
+  //       this.displayTravels = item;
+  //     });
+  // }
+
+  currencyChangeEvent() {
+    return null;
+  }
+
+    ngOnChanges() {
+
+    }
+
+  getTravels(event){
+    console.log("this.flightSearchResult", this.flightSearchResult);
+    this.travels = event;
+    this.displayTravels = event;
+    console.log("this.this.travels", this.travels);
+  }
 }

@@ -1,25 +1,20 @@
+import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
+import { company } from '../../enum/enum';
+import {companyName} from '../../enum/constant';
 import { CurrenciesService } from 'src/app/services/currencies.service';
 
 @Component({
   selector: 'app-travel-list',
   templateUrl: './travel-list.component.html',
-  styleUrls: ['./travel-list.component.scss'],
+  styleUrls: ['./travel-list.component.scss']
 })
 export class TravelListComponent implements OnInit, OnChanges {
-  @Input() travels;
-
-  departure: string;
-  arrived: string;
-  price: number;
-
-  flagFirstClass: boolean;
-  displayEscale: boolean;
-
-  firstClassState = [];
 
   constructor(private elem: ElementRef, private currency: CurrenciesService) {}
+
   moneySign: string;
+
   ngOnInit(): void {
     console.log('travels', this.travels);
     this.currency.currency$.subscribe((sign) => {
@@ -27,14 +22,27 @@ export class TravelListComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges() {
-    console.log('travel', this.travels);
+  @Input() travels;
+
+  departure: string;
+  arrived: string;
+  price: number;
+
+  company = company;
+
+  flagFirstClass: boolean;
+  displayEscale: boolean;
+
+  firstClassState = [];
+
+  ngOnChanges(){
+    console.log("travel", this.travels);
 
     //===================================================
     // Modification du Model.
     //====================================================
     if (this.travels != undefined) {
-      this.travels.forEach((travel) => {
+      this.travels.forEach(travel => {
         travel.TotalSum = 0;
         for (let index = 0; index < travel.Line.length; index++) {
           const line = travel.Line[index];
@@ -44,16 +52,23 @@ export class TravelListComponent implements OnInit, OnChanges {
           //====================================================
           travel.TotalSum += line.Price;
           line.IsFirstClass = false;
+          for (let jindex = 0; jindex < line.Plane.Options.length; jindex++) {
+            const option = line.Plane.Options[jindex];
+
+            option.isCheck = false;
+
+          }
         }
 
         //===================================================
         // Ajout des -15% lors des escales.
         //====================================================
-        if (travel.Line.length > 1) {
-          travel.TotalSum = travel.TotalSum * 0.85;
-        }
+        // if (travel.Line.length > 1) {
+        //   travel.TotalSum = travel.TotalSum * 0.85;
+        // }
       });
     }
+
   }
 
   getLine(idTravel, way) {
@@ -121,13 +136,18 @@ export class TravelListComponent implements OnInit, OnChanges {
         // On recalcul Total Sum avec les données des Lines.
         //===================================================
         element.TotalSum = 0;
-        for (let index = 0; index < element.Line.length; index++) {
-          const line = element.Line[index];
-
-          if (line.IsFirstClass === true) {
-            idTravel.TotalSum = idTravel.TotalSum + line.Price * 2;
-          } else {
-            idTravel.TotalSum = idTravel.TotalSum + line.Price;
+        if(element.Line){
+          for (let index = 0; index < element.Line.length; index++) {
+            const line = element.Line[index];
+            element.TotalSum += line.Price;
+            console.log(line);
+            for(let j = 0; j < line.Plane.Options.length; j++){
+              const anOption = line.Plane.Options[j];
+                console.log("----> anOption :",anOption);
+              if (anOption.isCheck === true) {
+                element.TotalSum += anOption.Price;
+              }
+            }
           }
         }
 
@@ -139,5 +159,14 @@ export class TravelListComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  optionsEvent(event){
+    console.log("optionsEvents :",event);
+  }
+
+  getCompanyName(name){
+    let resultName = companyName.find(value => value.Name === name ? value.text : '');
+    return resultName.text;
   }
 }

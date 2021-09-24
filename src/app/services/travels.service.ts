@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TravelsService {
   constructor(public http: HttpClient) {}
@@ -33,6 +33,7 @@ export class TravelsService {
       TicketType: reservations['first_class_0'],
     };
 
+
     bookData['Lines'] = [firstTicket];
     if (reservations['first_class_line_1'] !== '') {
       const secondTicket = {
@@ -47,5 +48,11 @@ export class TravelsService {
 
   RechercherTravel(params: any) {
     console.log('SERACH PARMA', params);
+  RechercherTravel(params:any){
+    if(params.date){
+      return this.http.get<any>(this.url + "Travels?date="+params.date.format('YYYY-MM-DD'));
+    } else {
+      return this.http.get<any>(this.url + "Travels");
+    }
   }
 }

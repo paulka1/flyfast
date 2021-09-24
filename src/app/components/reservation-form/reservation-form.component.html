@@ -1,32 +1,34 @@
 <form [formGroup]="travelForm" class="reservation-form" (ngSubmit)="onSubmit()">
-  <mat-form-field class="example-full-width" appearance="fill">
+  <mat-form-field id="nameInput" class="example-full-width" appearance="fill">
     <mat-label>Name</mat-label>
     <input type="text" formControlName="name" matInput placeholder="Ex. Dupont" >
   </mat-form-field>
   <div *ngIf="!isEscale">
-    <div *ngIf="idTravel.Line[0].Plane.NbrPlaceFirstClass > 0">
+    <div class="escaleLine" *ngFor="let option of idTravel.Line[0].Plane.Options; let i = index">
+      {{getOptions(option.Name)}}
+      <mat-checkbox formControlName="options" class="Line{{option.Id}}" [(ngModel)]="option.isCheck" (change)="eventCheck($event, i)"></mat-checkbox>
+    </div>
+    <div *ngIf="idTravel.Line[0].Plane.NbrPlaceFirstClassRemaining > 0">
       <mat-checkbox (change)="eventCheck($event,null)" [(ngModel)]="idTravel.Line[0].IsFirstClass"
         class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
     </div>
 
-    <div *ngIf="idTravel.Line[0].Plane.NbrPlaceFirstClass == 0">
+    <div *ngIf="idTravel.Line[0].Plane.NbrPlaceFirstClassRemaining == 0">
       <a>Pas de 1 ère Class sur ce vol</a>
     </div>
 
   </div>
   <div *ngIf="isEscale">
-    <div *ngFor="let line of idTravel.Line; let i = index">
-      {{line.Departure}} - {{line.Arrived}}
-      <!--      <mat-checkbox (change)="eventCheck($event, i, line.Id)" class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>-->
-      <div *ngIf="line.Plane.NbrPlaceFirstClass > 0">
-        <mat-checkbox id="Line{{line.Id}}" [(ngModel)]="line.IsFirstClass" (change)="eventCheck($event, i, line.Id)"
-          class="example-margin" formControlName="first_class">1 ère classe</mat-checkbox>
-      </div>
-
-      <div *ngIf="line.Plane.NbrPlaceFirstClass == 0">
+    <div class="escaleLine" *ngFor="let line of idTravel.Line; let i = index">
+      <span style="color: #3c0080; font-weight: bold; padding-right:10px">{{line.Departure}} - {{line.Arrived}}</span>
+      <div *ngIf="line.Plane.NbrPlaceFirstClassRemaining == 0">
         <a>Pas de 1 ère Class sur ce vol</a>
+      </div>
+      <div *ngFor="let option of line.Plane.Options; let i = index">
+        {{getOptions(option.Name)}}
+        <mat-checkbox formControlName="options" class="Line{{option.Id}}" [(ngModel)]="option.isCheck" (change)="eventCheck($event, i)"></mat-checkbox>
       </div>
     </div>
   </div>
-  <button mat-button color="primary"  type="submit" [disabled]="!travelForm.valid" class="button">Réserver</button>
+  <button mat-button color="primary" id="reservationButton" type="submit" [disabled]="!travelForm.valid" class="button">Réserver</button>
 </form>
