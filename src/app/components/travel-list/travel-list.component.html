@@ -19,7 +19,7 @@
       <ng-template matExpansionPanelContent>
 
         <div class="travelBox">
-          <app-reservation-form [idTravel]=idTravel (fristClassEvent)=firstClassEvent($event,idTravel)>
+          <app-reservation-form [idTravel]=idTravel (fristClassEvent)=firstClassEvent($event,idTravel) [price]="idTravel.TotalSum">
           </app-reservation-form>
         </div>
       </ng-template>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import {FormGroup, FormBuilder} from '@angular/forms';
+import { BookingsService } from 'src/app/services/bookings.service';
 import {TravelsService} from '../../services/travels.service';
 
 @Component({
@@ -13,13 +14,29 @@ export class SearchFormComponent implements OnInit {
 
   dateError:boolean;
 
-  airport = ['DTW', 'CDG', 'JFK'];
+  airport: Array<string> = ['DTW', 'CDG', 'JFK'];
+
+  isBooking: boolean;
+  isBooked: boolean;
+  bookedFailed: boolean;
 
   constructor(private fb:FormBuilder,
-              private travelsService:TravelsService) { }
+              private travelsService:TravelsService, 
+              private bookingService: BookingsService) { }
 
   ngOnInit(): void {
     this.formInit();
+    this.bookingService.isBooking$.subscribe(value => {
+      this.isBooking = value;
+    });
+    
+    this.bookingService.isBooked$.subscribe(value => {
+      this.isBooked = value;
+    });
+
+    this.bookingService.bookedFail$.subscribe(value => {
+      this.bookedFailed = value;
+    });
   }
 
   formInit(){

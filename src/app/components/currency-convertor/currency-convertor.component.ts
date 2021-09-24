@@ -31,26 +31,9 @@ export class CurrencyConvertorComponent implements OnInit {
   selected = this.currencies[0].viewValue;
   displayTravels = []
 
-  getCurrencyRate = () => {
-    if(this.current !== this.selected) {
-      this.currenciesService.convertCurrency(this.selected).subscribe(
-        (resp)=>{
-          let rate: number;
-          if(this.selected == "EUR") {
-            rate = 1;
-          } else {
-           rate = resp.Rate
-          }
-          this.currenciesService.travels$ = this.displayTravels;
-          this.travelSerice.travels$ = of(this.currenciesService.currencyChangeEvent(rate))
-          this.current = this.selected;
-
-        }
-      )}
-  }
   changeCurrency = () => {
     if(this.current !== this.selected) {
-      this.currenciesService.convertCurrency(this.selected).subscribe(
+      this.currenciesService.getCurrencyRate(this.selected).subscribe(
         (resp)=>{
           if(this.selected == "EUR") {
            this.travelSerice.getTravels();

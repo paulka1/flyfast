@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
+import { BookingsService } from 'src/app/services/bookings.service';
 import { CurrenciesService } from 'src/app/services/currencies.service';
 
 @Component({
@@ -18,8 +19,11 @@ export class TravelListComponent implements OnInit, OnChanges {
 
   firstClassState = [];
 
+
+
   constructor(private elem: ElementRef, private currency: CurrenciesService) {}
   moneySign: string;
+  isBooked: boolean;
   ngOnInit(): void {
     console.log('travels', this.travels);
     this.currency.currency$.subscribe((sign) => {
