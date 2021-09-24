@@ -40,6 +40,7 @@ export class SearchFormComponent implements OnInit {
       this.dateError = false;
       let result = this.travelsService.RechercherTravel(this.searchForm.value);
       result.subscribe(flight => {
+        this.searchFlightResult.emit(flight);
       })
     }
   }

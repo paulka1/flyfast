@@ -46,9 +46,8 @@ export class TravelsService {
     return this.http.post(`${this.url}/Book`, bookData);
   }
 
-  RechercherTravel(params: any) {
-    console.log('SERACH PARMA', params);
   RechercherTravel(params:any){
+    console.log("parma", params);
     if(params.date){
       return this.http.get<any>(this.url + "Travels?date="+params.date.format('YYYY-MM-DD'));
     } else {
